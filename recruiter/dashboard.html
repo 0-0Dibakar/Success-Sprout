@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruiter Dashboard - Success Sprout</title>
+    <link rel="stylesheet" href="../styles/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">SS</div>
+                <span>Recruiter</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#jobs" class="active" onclick="showSection('jobs')">My Jobs</a>
+                <a href="#post" onclick="showSection('post')">Post Job</a>
+                <a href="#" onclick="handleLogout()" class="logout-btn">Logout</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <section id="jobs" class="content-section active">
+                <h2>My Job Listings</h2>
+                <div class="table-container">
+                    <table id="jobsTable">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Location</th>
+                                <th>Applicants</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Jobs will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section id="post" class="content-section">
+                <h2>Post a New Job</h2>
+                <form id="postJobForm">
+                    <div class="form-group">
+                        <label for="jobTitle">Job Title</label>
+                        <input type="text" id="jobTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="jobLocation">Location</label>
+                        <input type="text" id="jobLocation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="jobDescription">Description</label>
+                        <textarea id="jobDescription" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="jobSkills">Required Skills (comma separated)</label>
+                        <input type="text" id="jobSkills" required>
+                    </div>
+                    <button type="submit" class="add-btn">Post Job</button>
+                </form>
+            </section>
+            <section id="applicants" class="content-section">
+                <h2>Applicants for <span id="jobTitleHeader"></span></h2>
+                <div class="table-container">
+                    <table id="applicantsTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Skills</th>
+                                <th>Resume</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Applicants will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+                <button onclick="showSection('jobs')" class="add-btn">Back to Jobs</button>
+            </section>
+        </main>
+    </div>
+    <script src="../scripts/recruiter.js"></script>
+</body>
+</html>

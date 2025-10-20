@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Success Sprout</title>
+    <link rel="stylesheet" href="../styles/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">SS</div>
+                <span>Success Sprout</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="active" onclick="showSection('dashboard')">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="#courses" onclick="showSection('courses')">
+                    <i class="fas fa-graduation-cap"></i> Courses
+                </a>
+                <a href="#freelancing" onclick="showSection('freelancing')">
+                    <i class="fas fa-laptop-code"></i> Freelancing
+                </a>
+                <a href="#scholarships" onclick="showSection('scholarships')">
+                    <i class="fas fa-award"></i> Scholarships
+                </a>
+                <a href="#jobs" onclick="showSection('jobs')">
+                    <i class="fas fa-briefcase"></i> Jobs
+                </a>
+                <a href="#users" onclick="showSection('users')">
+                    <i class="fas fa-users"></i> Users
+                </a>
+                <a href="#" onclick="handleLogout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="admin-profile">
+                    <span id="adminName">Admin</span>
+                    <img src="../images/admin-avatar.png" alt="Admin" class="avatar">
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <h2>Dashboard Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Total Users</h3>
+                        <p id="totalUsers">Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Active Courses</h3>
+                        <p id="totalCourses">Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-briefcase"></i>
+                        <h3>Open Jobs</h3>
+                        <p id="totalJobs">Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-award"></i>
+                        <h3>Active Scholarships</h3>
+                        <p id="totalScholarships">Loading...</p>
+                    </div>
+                </div>
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div id="activityList" class="activity-list">
+                        <!-- Activity items will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Courses Section -->
+            <section id="courses" class="content-section">
+                <div class="section-header">
+                    <h2>Manage Courses</h2>
+                    <button class="add-btn" onclick="showAddCourseModal()">
+                        <i class="fas fa-plus"></i> Add Course
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table id="coursesTable">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Instructor</th>
+                                <th>Price</th>
+                                <th>Students</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Course data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Other sections will be similar -->
+            <section id="freelancing" class="content-section">
+                <!-- Freelancing content -->
+            </section>
+
+            <section id="scholarships" class="content-section">
+                <!-- Scholarships content -->
+            </section>
+
+            <section id="jobs" class="content-section">
+                <!-- Jobs content -->
+            </section>
+
+            <section id="users" class="content-section">
+                <!-- Users content -->
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Course Modal -->
+    <div id="addCourseModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Course</h2>
+            <form id="addCourseForm">
+                <div class="form-group">
+                    <label for="courseTitle">Course Title</label>
+                    <input type="text" id="courseTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="courseInstructor">Instructor</label>
+                    <input type="text" id="courseInstructor" required>
+                </div>
+                <div class="form-group">
+                    <label for="coursePrice">Price (₹)</label>
+                    <input type="number" id="coursePrice" required>
+                </div>
+                <div class="form-group">
+                    <label for="courseDescription">Description</label>
+                    <textarea id="courseDescription" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="courseImage">Course Image</label>
+                    <input type="file" id="courseImage" accept="image/*">
+                </div>
+                <button type="submit">Add Course</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../scripts/admin.js"></script>
+</body>
+</html>

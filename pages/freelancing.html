@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancing Opportunities - Success Sprout</title>
+    <link rel="stylesheet" href="../styles/pages.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">SS</div>
+                Success Sprout
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="courses.html">Courses</a></li>
+                <li><a href="scholarships.html">Scholarships</a></li>
+                <li><a href="recruiter.html">Recruiters</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content">
+        <h1>Freelancing Opportunities</h1>
+        <div class="opportunities-grid">
+            <div class="opportunity-card">
+                <span class="badge">New</span>
+                <h3>Web Development Project</h3>
+                <p class="price">₹15,000 - ₹25,000</p>
+                <p class="description">Looking for a skilled web developer to create a responsive e-commerce website.</p>
+                <ul class="requirements">
+                    <li>HTML5, CSS3, JavaScript</li>
+                    <li>React.js experience</li>
+                    <li>3+ years experience</li>
+                </ul>
+                <button class="apply-btn" onclick="applyForProject(1)">Apply Now</button>
+            </div>
+
+            <div class="opportunity-card">
+                <h3>Content Writing</h3>
+                <p class="price">₹5,000 - ₹8,000</p>
+                <p class="description">Need creative writers for educational blog posts and articles.</p>
+                <ul class="requirements">
+                    <li>Strong English skills</li>
+                    <li>SEO knowledge</li>
+                    <li>Education background preferred</li>
+                </ul>
+                <button class="apply-btn" onclick="applyForProject(2)">Apply Now</button>
+            </div>
+
+            <div class="opportunity-card">
+                <span class="badge">Urgent</span>
+                <h3>Mobile App UI Design</h3>
+                <p class="price">₹20,000 - ₹30,000</p>
+                <p class="description">Seeking UI/UX designer for educational app interface design.</p>
+                <ul class="requirements">
+                    <li>Figma expertise</li>
+                    <li>Mobile app design experience</li>
+                    <li>Portfolio required</li>
+                </ul>
+                <button class="apply-btn" onclick="applyForProject(3)">Apply Now</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function applyForProject(projectId) {
+            // Check if user is logged in
+            const token = localStorage.getItem('userToken');
+            if (!token) {
+                alert('Please login to apply for projects');
+                window.location.href = '../index.html#login';
+                return;
+            }
+
+            // Handle application
+            fetch('http://localhost:3000/api/apply-project', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ projectId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Application submitted successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to submit application. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scholarships - Success Sprout</title>
+    <link rel="stylesheet" href="../styles/pages.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">SS</div>
+                Success Sprout
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="courses.html">Courses</a></li>
+                <li><a href="freelancing.html">Freelancing</a></li>
+                <li><a href="recruiter.html">Recruiters</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content">
+        <h1>Available Scholarships</h1>
+        <div class="filter-section">
+            <select id="educationLevel">
+                <option value="all">All Levels</option>
+                <option value="undergraduate">Undergraduate</option>
+                <option value="postgraduate">Postgraduate</option>
+                <option value="phd">PhD</option>
+            </select>
+            <select id="category">
+                <option value="all">All Categories</option>
+                <option value="merit">Merit-based</option>
+                <option value="need">Need-based</option>
+                <option value="research">Research</option>
+            </select>
+        </div>
+
+        <div class="scholarships-grid">
+            <div class="scholarship-card">
+                <span class="badge urgent">Deadline Soon</span>
+                <h3>Merit Scholarship 2025</h3>
+                <p class="amount">₹50,000 per year</p>
+                <div class="details">
+                    <p><strong>Deadline:</strong> November 15, 2025</p>
+                    <p><strong>Level:</strong> Undergraduate</p>
+                    <p><strong>Category:</strong> Merit-based</p>
+                </div>
+                <p class="description">Full scholarship for top performing students in engineering and technology.</p>
+                <button class="apply-btn" onclick="applyForScholarship(1)">Apply Now</button>
+            </div>
+
+            <div class="scholarship-card">
+                <h3>Research Grant 2026</h3>
+                <p class="amount">₹75,000 per semester</p>
+                <div class="details">
+                    <p><strong>Deadline:</strong> December 31, 2025</p>
+                    <p><strong>Level:</strong> Postgraduate</p>
+                    <p><strong>Category:</strong> Research</p>
+                </div>
+                <p class="description">Research funding for innovative projects in AI and Machine Learning.</p>
+                <button class="apply-btn" onclick="applyForScholarship(2)">Apply Now</button>
+            </div>
+
+            <div class="scholarship-card">
+                <h3>Need-Based Support</h3>
+                <p class="amount">₹30,000 per year</p>
+                <div class="details">
+                    <p><strong>Deadline:</strong> Ongoing</p>
+                    <p><strong>Level:</strong> All Levels</p>
+                    <p><strong>Category:</strong> Need-based</p>
+                </div>
+                <p class="description">Financial support for deserving students from low-income backgrounds.</p>
+                <button class="apply-btn" onclick="applyForScholarship(3)">Apply Now</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function applyForScholarship(scholarshipId) {
+            const token = localStorage.getItem('userToken');
+            if (!token) {
+                alert('Please login to apply for scholarships');
+                window.location.href = '../index.html#login';
+                return;
+            }
+
+            fetch('http://localhost:3000/api/apply-scholarship', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ scholarshipId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Scholarship application submitted successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to submit application. Please try again.');
+            });
+        }
+
+        // Filter functionality
+        document.getElementById('educationLevel').addEventListener('change', filterScholarships);
+        document.getElementById('category').addEventListener('change', filterScholarships);
+
+        function filterScholarships() {
+            // Add filtering logic here
+        }
+    </script>
+</body>
+</html>

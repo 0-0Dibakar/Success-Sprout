@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Success Sprout - Your AI-Powered Education & Career Platform. Get personalized learning paths and career guidance for just ₹1.">
+    <meta name="keywords" content="education, career guidance, AI learning, online courses, career development, personalized learning">
+    <meta name="author" content="Success Sprout">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Success Sprout - AI-Powered Education & Career Platform">
+    <meta property="og:description" content="Transform your education and career journey with AI-powered personalized learning paths and career guidance.">
+    <meta property="og:image" content="/images/success-sprout-og.png">
+    <meta property="og:url" content="https://successsprout.com">
+    <meta name="theme-color" content="#667eea">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+    
+    <!-- Performance Optimizations -->
+    <link rel="preconnect" href="https://www.paypal.com">
+    <link rel="dns-prefetch" href="https://www.paypal.com">
+    
+    <!-- Defer non-critical CSS -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap"></noscript>
+    
+    <title>Success Sprout - AI-Powered Education & Career Platform</title>
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AY_gV-pVWNFTgL2bxCrzpN-33k1o1EeotQ0gy4hvcNMeFKf4eDQnj4cW2NQg-wLQBsyilvsN6By8CvZC&currency=INR" defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 150px 2rem 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100px); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .price-tag {
+            display: inline-block;
+            background: #ffd700;
+            color: #333;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .registration-form {
+            max-width: 400px;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .registration-form input {
+            padding: 12px 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .registration-form input:focus {
+            outline: none;
+            border-color: white;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .registration-form input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .status-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+
+        .status-message.success {
+            background: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+        }
+
+        .status-message.error {
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff0000;
+        }
+
+        #paypal-button-container {
+            margin: 20px auto;
+            max-width: 300px;
+        }
+
+        .features {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .ai-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .benefits {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 80px 2rem;
+            margin-top: 80px;
+        }
+
+        .benefits-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .benefits-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .check-icon {
+            width: 30px;
+            height: 30px;
+            background: #4caf50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 2rem;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer p {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">SS</div>
+                Success Sprout
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="pages/courses.html">Courses</a></li>
+                <li><a href="pages/freelancing.html">Freelancing</a></li>
+                <li><a href="pages/scholarships.html">Scholarships</a></li>
+                <li><a href="pages/recruiter.html">Recruiters</a></li>
+                <li><a href="#join">Join Now</a></li>
+                <li><a href="#" id="recruiterLoginBtn">Recruiter Login</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Success Sprout</h1>
+            <p>Your AI-Powered Journey to Academic Excellence and Career Success Starts Here</p>
+            <button class="price-tag" id="joinNowBtn" style="cursor:pointer; background:none; border:none; font:inherit;">Join for Just ₹1</button>
+            <p style="font-size: 1rem; margin-top: 1rem;">Unlock unlimited access to AI-powered recommendations</p>
+            
+            <!-- PayPal button always visible -->
+            <div id="paypal-button-container"></div>
+            <div id="payment-loading" style="display: none; text-align: center; margin-top: 15px;">
+                <p>Processing payment...</p>
+            </div>
+            <div id="registration-status" class="status-message"></div>
+
+            <!-- Registration Form -->
+            <div class="registration-form" id="registrationForm">
+                <input type="text" id="name" placeholder="Full Name" required>
+                <input type="email" id="email" placeholder="Email Address" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button class="cta-button" onclick="handleRegistration()">Get Started Now</button>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        let currentUser = null;
+        // Trigger PayPal payment when price-tag is clicked
+        document.addEventListener('DOMContentLoaded', function() {
+            var joinNowBtn = document.getElementById('joinNowBtn');
+            if (joinNowBtn) {
+                joinNowBtn.addEventListener('click', function() {
+                    // Try to find the PayPal button and click it
+                    var paypalBtn = document.querySelector('#paypal-button-container button, #paypal-button-container iframe');
+                    if (paypalBtn) {
+                        paypalBtn.focus();
+                        paypalBtn.click();
+                    } else {
+                        // fallback: scroll to PayPal button
+                        var paypalDiv = document.getElementById('paypal-button-container');
+                        if (paypalDiv) {
+                            paypalDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }
+                });
+            }
+        });
+
+        async function handleRegistration() {
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const skillsInput = document.getElementById('skills');
+            const resumeInput = document.getElementById('resume');
+            const statusDiv = document.getElementById('registration-status');
+
+            try {
+                const formData = new FormData();
+                formData.append('name', nameInput.value);
+                formData.append('email', emailInput.value);
+                formData.append('password', passwordInput.value);
+                formData.append('skills', skillsInput.value);
+                if (resumeInput.files.length > 0) {
+                    formData.append('resume', resumeInput.files[0]);
+                }
+
+                const response = await fetch('http://localhost:3000/api/register', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    currentUser = {
+                        userId: data.userId,
+                        token: data.token
+                    };
+                    // Show success message
+                    statusDiv.innerHTML = 'Registration successful! Please proceed with payment.';
+                    statusDiv.className = 'status-message success';
+                    statusDiv.style.display = 'block';
+                } else {
+                    throw new Error(data.message || 'Registration failed');
+                }
+            } catch (error) {
+                statusDiv.innerHTML = error.message;
+                statusDiv.className = 'status-message error';
+                statusDiv.style.display = 'block';
+            }
+        }
+
+        // Handle PayPal SDK loading error
+        window.addEventListener('error', function(e) {
+            if (e.target.src && e.target.src.includes('paypal')) {
+                document.getElementById('paypal-button-container').innerHTML = 
+                    '<p style="color: red;">Payment system temporarily unavailable. Please try again later.</p>';
+            }
+        }, true);
+
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '1.00',
+                            currency_code: 'INR'
+                        },
+                        description: 'Success Sprout Membership'
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(async function(details) {
+                    try {
+                        // Update payment status in backend
+                        await fetch('http://localhost:3000/api/payment-webhook', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${currentUser.token}`
+                            },
+                            body: JSON.stringify({
+                                userId: currentUser.userId,
+                                paymentId: details.id
+                            })
+                        });
+
+                        // Show success message
+                        const statusDiv = document.getElementById('registration-status');
+                        statusDiv.innerHTML = 'Thank you for your payment! Your Success Sprout membership is now active.';
+                        statusDiv.className = 'status-message success';
+                        statusDiv.style.display = 'block';
+
+                        // Hide PayPal button
+                        document.getElementById('paypal-button-container').style.display = 'none';
+                    } catch (error) {
+                        console.error('Payment verification error:', error);
+                        alert('Payment received but verification failed. Please contact support.');
+                    }
+                });
+            },
+            onError: function(err) {
+                alert('There was an error processing your payment. Please try again.');
+                console.error('PayPal Error:', err);
+            }
+        }).render('#paypal-button-container');
+    </script>
+
+    <section class="features" id="features">
+        <h2 class="section-title">Powered by Advanced AI Technology</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="ai-badge">AI POWERED</div>
+                <div class="feature-icon">📚</div>
+                <h3>Smart Course Recommendations</h3>
+                <p>Our AI analyzes your interests, goals, and learning style to recommend the perfect courses and programs tailored specifically for you. Get personalized learning paths that adapt to your progress.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="ai-badge">AI POWERED</div>
+                <div class="feature-icon">🎓</div>
+                <h3>Scholarship Finder</h3>
+                <p>Discover government and private scholarships that match your profile. Our AI scans thousands of opportunities and alerts you to scholarships you're eligible for, maximizing your chances of funding.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="ai-badge">AI POWERED</div>
+                <div class="feature-icon">💼</div>
+                <h3>Recruitment Platform</h3>
+                <p>For recruiters: Find the perfect candidates with our AI-powered matching system. For students: Get matched with employers looking for your specific skills and qualifications.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="ai-badge">EARN MONEY</div>
+                <div class="feature-icon">💰</div>
+                <h3>Freelancing Opportunities</h3>
+                <p>Start your freelancing journey with just ₹1! Access exclusive project listings, get matched with clients, and earn money while building your skills. Perfect for students looking to gain experience and income.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits">
+        <div class="benefits-content">
+            <h2 class="section-title">Why Choose Success Sprout?</h2>
+            <div class="benefits-list">
+                <div class="benefit-item">
+                    <div class="check-icon">✓</div>
+                    <div>
+                        <h4>Affordable Access</h4>
+                        <p>Just ₹1 to unlock everything</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="check-icon">✓</div>
+                    <div>
+                        <h4>Personalized AI</h4>
+                        <p>Recommendations unique to you</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="check-icon">✓</div>
+                    <div>
+                        <h4>24/7 Availability</h4>
+                        <p>Access anytime, anywhere</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="check-icon">✓</div>
+                    <div>
+                        <h4>Updated Database</h4>
+                        <p>Latest courses & scholarships</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="check-icon">✓</div>
+                    <div>
+                        <h4>Career Support</h4>
+                        <p>Connect with top recruiters</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="check-icon">✓</div>
+                    <div>
+                        <h4>Success Tracking</h4>
+                        <p>Monitor your progress</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="check-icon">✓</div>
+                    <div>
+                        <h4>Earn While Learning</h4>
+                        <p>Freelance projects & income</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="check-icon">✓</div>
+                    <div>
+                        <h4>Skill Development</h4>
+                        <p>Real-world experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="join">
+        <div class="cta-content">
+            <h2>Ready to Transform Your Future?</h2>
+            <p>Join thousands of students already using Success Sprout to achieve their dreams</p>
+            <div class="price-tag">Limited Time Offer: ₹1 Only</div>
+            <br><br>
+            <a href="#" class="cta-button" onclick="alert('Registration coming soon! Thank you for your interest.'); return false;">Join Success Sprout Today</a>
+            <p style="font-size: 0.9rem; margin-top: 2rem; opacity: 0.9;">
+                No hidden fees • Cancel anytime • Instant access
+            </p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2025 Success Sprout. All rights reserved.</p>
+        <p style="margin-top: 0.5rem;">Empowering students with AI-driven education solutions</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .benefit-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s, transform 0.6s';
+            observer.observe(el);
+        });
+    </script>
+<script>
+// Recruiter Login button logic
+document.addEventListener('DOMContentLoaded', function() {
+    var recruiterLoginBtn = document.getElementById('recruiterLoginBtn');
+    if (recruiterLoginBtn) {
+        recruiterLoginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            // If already logged in as recruiter, redirect to dashboard
+            if (localStorage.getItem('recruiterToken')) {
+                window.location.href = 'recruiter/dashboard.html';
+            } else {
+                window.location.href = 'recruiter/login.html';
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>

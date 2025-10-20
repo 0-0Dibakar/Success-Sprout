@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - Success Sprout</title>
+    <link rel="stylesheet" href="../styles/pages.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">SS</div>
+                Success Sprout
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="freelancing.html">Freelancing</a></li>
+                <li><a href="scholarships.html">Scholarships</a></li>
+                <li><a href="recruiter.html">Recruiters</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content">
+        <h1>Available Courses</h1>
+        <div class="filter-section">
+            <input type="text" id="searchCourses" placeholder="Search courses...">
+            <select id="category">
+                <option value="all">All Categories</option>
+                <option value="programming">Programming</option>
+                <option value="design">Design</option>
+                <option value="business">Business</option>
+                <option value="data">Data Science</option>
+            </select>
+            <select id="level">
+                <option value="all">All Levels</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select>
+        </div>
+
+        <div class="courses-grid">
+            <div class="course-card">
+                <div class="course-image">
+                    <img src="../images/web-dev.jpg" alt="Web Development">
+                    <span class="badge">Bestseller</span>
+                </div>
+                <div class="course-content">
+                    <h3>Full Stack Web Development</h3>
+                    <p class="instructor">By John Smith</p>
+                    <div class="course-details">
+                        <span><i class="far fa-clock"></i> 48 hours</span>
+                        <span><i class="far fa-user"></i> 12,345 students</span>
+                        <span><i class="far fa-star"></i> 4.8 (2,456 reviews)</span>
+                    </div>
+                    <p class="description">Learn full stack web development with MERN stack.</p>
+                    <div class="price-section">
+                        <p class="price">₹999 <span class="original-price">₹4,999</span></p>
+                        <button class="enroll-btn" onclick="enrollCourse(1)">Enroll Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image">
+                    <img src="../images/ai-ml.jpg" alt="AI & ML">
+                    <span class="badge">New</span>
+                </div>
+                <div class="course-content">
+                    <h3>AI & Machine Learning Fundamentals</h3>
+                    <p class="instructor">By Dr. Sarah Johnson</p>
+                    <div class="course-details">
+                        <span><i class="far fa-clock"></i> 36 hours</span>
+                        <span><i class="far fa-user"></i> 8,790 students</span>
+                        <span><i class="far fa-star"></i> 4.9 (1,234 reviews)</span>
+                    </div>
+                    <p class="description">Comprehensive introduction to AI and Machine Learning.</p>
+                    <div class="price-section">
+                        <p class="price">₹1,499 <span class="original-price">₹5,999</span></p>
+                        <button class="enroll-btn" onclick="enrollCourse(2)">Enroll Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image">
+                    <img src="../images/ui-design.jpg" alt="UI Design">
+                </div>
+                <div class="course-content">
+                    <h3>UI/UX Design Masterclass</h3>
+                    <p class="instructor">By Emily Chen</p>
+                    <div class="course-details">
+                        <span><i class="far fa-clock"></i> 24 hours</span>
+                        <span><i class="far fa-user"></i> 6,543 students</span>
+                        <span><i class="far fa-star"></i> 4.7 (987 reviews)</span>
+                    </div>
+                    <p class="description">Master modern UI/UX design principles and tools.</p>
+                    <div class="price-section">
+                        <p class="price">₹799 <span class="original-price">₹3,999</span></p>
+                        <button class="enroll-btn" onclick="enrollCourse(3)">Enroll Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function enrollCourse(courseId) {
+            const token = localStorage.getItem('userToken');
+            if (!token) {
+                alert('Please login to enroll in courses');
+                window.location.href = '../index.html#login';
+                return;
+            }
+
+            fetch('http://localhost:3000/api/enroll-course', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ courseId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Successfully enrolled in the course!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to enroll. Please try again.');
+            });
+        }
+
+        // Search and filter functionality
+        document.getElementById('searchCourses').addEventListener('input', searchCourses);
+        document.getElementById('category').addEventListener('change', filterCourses);
+        document.getElementById('level').addEventListener('change', filterCourses);
+
+        function searchCourses(event) {
+            const searchTerm = event.target.value.toLowerCase();
+            // Add search logic here
+        }
+
+        function filterCourses() {
+            // Add filtering logic here
+        }
+    </script>
+</body>
+</html>
