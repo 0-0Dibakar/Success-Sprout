@@ -34,7 +34,16 @@
     
     <title>Success Sprout - AI-Powered Education & Career Platform</title>
     <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AY_gV-pVWNFTgL2bxCrzpN-33k1o1EeotQ0gy4hvcNMeFKf4eDQnj4cW2NQg-wLQBsyilvsN6By8CvZC&currency=INR" defer></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AWxKauC9xzSCydV4Te33Lfl9hFU7Ck2oAMEmR7La0EgPQxCsB5vAXbW0iJKXVPRgvAk84xsGHaQ9HgM3&currency=INR&intent=capture"></script>
+    <!-- Retry registration function -->
+    <script>
+        function retryRegistration() {
+            const paymentStatus = document.getElementById('payment-status');
+            paymentStatus.style.display = 'none';
+            document.getElementById('registrationForm').style.display = 'flex';
+            document.querySelector('#registrationForm .cta-button').disabled = false;
+        }
+    </script>
     <style>
         * {
             margin: 0;
@@ -43,21 +52,24 @@
         }
 
         body {
+
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: #e0e0e0;
             overflow-x: hidden;
+            background-color: #121212;
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: #000000;
+            color: #ffffff;
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(255,215,0,0.1);
+            border-bottom: 1px solid #333;
         }
 
         .nav-container {
@@ -80,13 +92,15 @@
         .logo-icon {
             width: 40px;
             height: 40px;
-            background: white;
+            background: #1a1a1a;
+            border: 2px solid #ffd700;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #667eea;
+            color: #ffd700;
             font-weight: bold;
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
         }
 
         .nav-links {
@@ -96,22 +110,54 @@
         }
 
         .nav-links a {
-            color: white;
+            color: #ffd700;
             text-decoration: none;
-            transition: opacity 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ffd700;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .nav-links a:hover {
-            opacity: 0.8;
+            
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255,215,0,0.3);
+        }
+
+        .nav-links .highlight-btn {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links .highlight-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
         }
 
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: #000000;
+            color: #ffffff;
             padding: 150px 2rem 100px;
             text-align: center;
             position: relative;
             overflow: hidden;
+            border-bottom: 1px solid #333;
         }
 
         .hero::before {
@@ -121,7 +167,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="%23ffd700" opacity="0.05"/></svg>');
             animation: float 20s linear infinite;
         }
 
@@ -161,41 +207,60 @@
             }
         }
 
-        .price-tag {
+            .price-tag {
             display: inline-block;
-            background: #ffd700;
-            color: #333;
+            background: #1a1a1a;
+            color: #ffd700;
             padding: 1rem 2rem;
             border-radius: 50px;
             font-size: 1.5rem;
             font-weight: bold;
             margin: 1rem 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 20px rgba(255,215,0,0.2);
             animation: pulse 2s infinite;
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .price-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(255,215,0,0.3);
+            background: #000000;
+        }
+
+        .price-tag:active {
+            transform: translateY(1px);
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
-        }
-
-        .cta-button {
+        }        .cta-button {
             display: inline-block;
-            background: white;
-            color: #667eea;
+            background: #1a1a1a;
+            color: #ffd700;
             padding: 1rem 3rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
             font-size: 1.2rem;
             margin-top: 1rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 20px rgba(255,215,0,0.1);
+            text-shadow: 0 0 10px rgba(255,215,0,0.3);
         }
 
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 0 30px rgba(255,215,0,0.2);
+            background: #ffd700;
+            color: #000000;
+            text-shadow: none;
         }
 
         .registration-form {
@@ -208,18 +273,19 @@
 
         .registration-form input {
             padding: 12px 15px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid #333;
             border-radius: 25px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
+            background: #000000;
+            color: #ffffff;
             font-size: 16px;
             transition: all 0.3s ease;
         }
 
         .registration-form input:focus {
             outline: none;
-            border-color: white;
-            background: rgba(255, 255, 255, 0.2);
+            border-color: #ffd700;
+            background: #1a1a1a;
+            box-shadow: 0 0 15px rgba(255,215,0,0.1);
         }
 
         .registration-form input::placeholder {
@@ -232,34 +298,67 @@
             border-radius: 5px;
             text-align: center;
             display: none;
+            font-weight: 500;
+            backdrop-filter: blur(5px);
         }
 
         .status-message.success {
-            background: rgba(0, 255, 0, 0.1);
-            color: #00ff00;
+            background: rgba(0, 0, 0, 0.7);
+            color: #ffd700;
+            border: 1px solid #ffd700;
+            text-shadow: 0 0 10px rgba(255,215,0,0.3);
         }
 
         .status-message.error {
-            background: rgba(255, 0, 0, 0.1);
-            color: #ff0000;
+            background: rgba(0, 0, 0, 0.7);
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+            text-shadow: 0 0 10px rgba(255,107,107,0.3);
+        }
+
+        #toggleFormBtn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        #toggleFormBtn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .login-form {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .login-form.visible {
+            opacity: 1;
         }
 
         #paypal-button-container {
             margin: 20px auto;
             max-width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ffd700;
+            box-shadow: 0 0 20px rgba(255,215,0,0.1);
         }
 
         .features {
             max-width: 1200px;
             margin: 80px auto;
             padding: 0 2rem;
+            background: #000000;
         }
 
         .section-title {
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 3rem;
-            color: #333;
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255,215,0,0.3);
         }
 
         .features-grid {
@@ -270,59 +369,80 @@
         }
 
         .feature-card {
-            background: white;
+            background: #1a1a1a;
             padding: 2rem;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 2px solid transparent;
+            box-shadow: 0 0 30px rgba(255,215,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #333;
         }
 
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-            border-color: #667eea;
+            box-shadow: 0 0 40px rgba(255,215,0,0.2);
+            border-color: #ffd700;
+            background: #0a0a0a;
         }
 
         .feature-icon {
             width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #000000;
+            border: 2px solid #ffd700;
             border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
             margin-bottom: 1.5rem;
-            color: white;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
         }
 
         .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #333;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255,215,0,0.3);
         }
 
         .feature-card p {
-            color: #666;
+            color: #e0e0e0;
             line-height: 1.8;
         }
 
         .ai-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: #1a1a1a;
+            color: #ffd700;
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
+            border: 1px solid #ffd700;
+            text-shadow: 0 0 10px rgba(255,215,0,0.3);
         }
 
         .benefits {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: #000000;
             padding: 80px 2rem;
             margin-top: 80px;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefits::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="%23ffd700" opacity="0.02"/></svg>');
+            animation: float 20s linear infinite;
         }
 
         .benefits-content {
@@ -338,33 +458,46 @@
         }
 
         .benefit-item {
-            background: white;
+            background: #1a1a1a;
             padding: 1.5rem;
             border-radius: 15px;
             display: flex;
             align-items: start;
             gap: 1rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 0 20px rgba(255,215,0,0.1);
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(255,215,0,0.2);
+            border-color: #ffd700;
+            background: #0a0a0a;
         }
 
         .check-icon {
             width: 30px;
             height: 30px;
-            background: #4caf50;
+            background: #000000;
+            border: 2px solid #ffd700;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #ffd700;
             font-weight: bold;
             flex-shrink: 0;
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
         }
 
         .cta-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: #000000;
+            color: #ffffff;
             padding: 80px 2rem;
             text-align: center;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
         }
 
         .cta-content {
@@ -384,14 +517,17 @@
         }
 
         .footer {
-            background: #2c3e50;
-            color: white;
+            background: #000000;
+            color: #ffffff;
             padding: 2rem;
             text-align: center;
+            border-top: 1px solid #333;
         }
 
         .footer p {
             opacity: 0.8;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255,215,0,0.3);
         }
 
         @media (max-width: 768px) {
@@ -422,8 +558,9 @@
                 <li><a href="pages/freelancing.html">Freelancing</a></li>
                 <li><a href="pages/scholarships.html">Scholarships</a></li>
                 <li><a href="pages/recruiter.html">Recruiters</a></li>
-                <li><a href="#join">Join Now</a></li>
-                <li><a href="#" id="recruiterLoginBtn">Recruiter Login</a></li>
+                <li><a href="#" id="loginBtn">Login</a></li>
+                <li><a href="#join" class="highlight-btn">Join Now</a></li>
+                <li><a href="recruiter/login.html" id="recruiterLoginBtn">Recruiter Login</a></li>
             </ul>
         </div>
     </header>
@@ -432,90 +569,445 @@
         <div class="hero-content">
             <h1>Welcome to Success Sprout</h1>
             <p>Your AI-Powered Journey to Academic Excellence and Career Success Starts Here</p>
-            <button class="price-tag" id="joinNowBtn" style="cursor:pointer; background:none; border:none; font:inherit;">Join for Just ₹1</button>
+            <button type="button" class="price-tag" id="joinNowBtn" onclick="handleJoinButtonClick()">
+                Join for Just ₹1
+                <span style="display: block; font-size: 0.8rem; margin-top: 5px; opacity: 0.9;">Click to proceed →</span>
+            </button>
             <p style="font-size: 1rem; margin-top: 1rem;">Unlock unlimited access to AI-powered recommendations</p>
             
-            <!-- PayPal button always visible -->
-            <div id="paypal-button-container"></div>
+            <!-- PayPal button container -->
+            <div id="paypal-button-container" style="display: none; margin: 20px auto; max-width: 300px;"></div>
+            
+            <!-- Payment status messages -->
+            <div id="payment-status" style="display: none; margin-top: 20px; padding: 15px; border-radius: 10px; text-align: center;">
+                <div class="payment-message"></div>
+            </div>
             <div id="payment-loading" style="display: none; text-align: center; margin-top: 15px;">
                 <p>Processing payment...</p>
             </div>
             <div id="registration-status" class="status-message"></div>
+
+            <!-- Login/Registration Toggle -->
+            <div style="margin-bottom: 20px; text-align: center;">
+                <button id="toggleFormBtn" class="cta-button" style="background: rgba(255,255,255,0.2); margin: 0 5px;" onclick="toggleForm()">
+                    Switch to Login
+                </button>
+            </div>
 
             <!-- Registration Form -->
             <div class="registration-form" id="registrationForm">
                 <input type="text" id="name" placeholder="Full Name" required>
                 <input type="email" id="email" placeholder="Email Address" required>
                 <input type="password" id="password" placeholder="Password" required>
+                <input type="tel" id="phoneNumber" placeholder="Phone Number" required>
                 <button class="cta-button" onclick="handleRegistration()">Get Started Now</button>
+            </div>
+
+            <!-- Login Form -->
+            <div class="registration-form" id="loginForm" style="display: none;">
+                <input type="email" id="loginEmail" placeholder="Email Address" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button class="cta-button" onclick="handleLogin()">Login</button>
             </div>
         </div>
     </section>
     
     <script>
-        let currentUser = null;
-        // Trigger PayPal payment when price-tag is clicked
-        document.addEventListener('DOMContentLoaded', function() {
-            var joinNowBtn = document.getElementById('joinNowBtn');
-            if (joinNowBtn) {
-                joinNowBtn.addEventListener('click', function() {
-                    // Try to find the PayPal button and click it
-                    var paypalBtn = document.querySelector('#paypal-button-container button, #paypal-button-container iframe');
-                    if (paypalBtn) {
-                        paypalBtn.focus();
-                        paypalBtn.click();
-                    } else {
-                        // fallback: scroll to PayPal button
-                        var paypalDiv = document.getElementById('paypal-button-container');
-                        if (paypalDiv) {
-                            paypalDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
-                    }
-                });
+        // Open registration form when CTA is clicked
+        function openRegistrationFromCTA() {
+            const registrationForm = document.getElementById('registrationForm');
+            const toggleFormBtn = document.getElementById('toggleFormBtn');
+            const paymentStatus = document.getElementById('payment-status');
+
+            // Ensure registration form is visible
+            if (registrationForm) {
+                registrationForm.style.display = 'flex';
+                // Hide any payment status message
+                if (paymentStatus) paymentStatus.style.display = 'none';
+                // Scroll and focus first input
+                registrationForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const firstInput = registrationForm.querySelector('input');
+                if (firstInput) firstInput.focus();
             }
+
+            // If toggle button exists, ensure it's set to registration state label
+            if (toggleFormBtn) {
+                toggleFormBtn.textContent = 'Switch to Login';
+            }
+        }
+
+        // Start the join flow: if already registered, show PayPal; else open registration and mark to auto-start payment
+        function startJoinFlow() {
+            // If currentUser exists (already registered), show PayPal immediately
+            if (currentUser && currentUser.userId) {
+                // Render PayPal UI
+                const paypalBtn = initPayPalButton();
+                if (paypalBtn) paypalBtn.render('#paypal-button-container');
+                showPaymentUI();
+                return;
+            }
+
+            // Not registered yet: open registration form and set a flag to auto-start payment after registration
+            window.__autoStartPayment = true;
+            openRegistrationFromCTA();
+        }
+
+        let currentUser = null;
+
+        // Modal functionality
+        const modal = document.getElementById('loginModal');
+        const loginBtn = document.getElementById('loginBtn');
+        const closeBtn = document.getElementsByClassName('close')[0];
+        const modalLink = document.querySelector('.modal-link');
+
+        // Open modal
+        loginBtn.onclick = function(e) {
+            e.preventDefault();
+            modal.style.display = 'block';
+            document.getElementById('loginEmail').focus();
+        }
+
+        // Close modal
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Modal link to registration
+        modalLink.onclick = function(e) {
+            modal.style.display = 'none';
+            document.getElementById('registrationForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Handle modal login
+        async function handleModalLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('loginModalEmail').value;
+            const password = document.getElementById('loginModalPassword').value;
+            const errorDiv = document.getElementById('loginError');
+            const submitBtn = document.querySelector('.modal-submit-btn');
+            
+            try {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Logging in...';
+                
+                const response = await fetch('http://localhost:3000/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Store auth data
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('userId', data.userId);
+                    localStorage.setItem('userName', data.name);
+                    
+                    // Show success message
+                    submitBtn.textContent = 'Success! Redirecting...';
+                    submitBtn.style.background = '#4caf50';
+
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = '/dashboard.html';
+                    }, 1500);
+                } else {
+                    throw new Error(data.message || 'Login failed');
+                }
+            } catch (error) {
+                errorDiv.textContent = error.message || 'Login failed. Please check your credentials.';
+                errorDiv.style.display = 'block';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Login';
+            }
+        }
+
+        // Check if user is already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                loginBtn.textContent = 'Dashboard';
+                loginBtn.href = '/dashboard.html';
+            }
+        });
+        let isLoginForm = false;
+
+        function toggleForm() {
+            isLoginForm = !isLoginForm;
+            const registrationForm = document.getElementById('registrationForm');
+            const loginForm = document.getElementById('loginForm');
+            const toggleBtn = document.getElementById('toggleFormBtn');
+            const paypalContainer = document.getElementById('paypal-button-container');
+            const joinNowBtn = document.getElementById('joinNowBtn');
+
+            if (isLoginForm) {
+                registrationForm.style.display = 'none';
+                loginForm.style.display = 'flex';
+                toggleBtn.textContent = 'Switch to Registration';
+                paypalContainer.style.display = 'none';
+                joinNowBtn.style.display = 'none';
+            } else {
+                registrationForm.style.display = 'flex';
+                loginForm.style.display = 'none';
+                toggleBtn.textContent = 'Switch to Login';
+                joinNowBtn.style.display = 'block';
+            }
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const statusDiv = document.getElementById('registration-status');
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Store auth data
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('userId', data.userId);
+                    localStorage.setItem('userName', data.name);
+                    
+                    // Show success message
+                    statusDiv.innerHTML = 'Login successful! Redirecting to dashboard...';
+                    statusDiv.className = 'status-message success';
+                    statusDiv.style.display = 'block';
+
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = '/dashboard.html';
+                    }, 1500);
+                } else {
+                    throw new Error(data.message || 'Login failed');
+                }
+            } catch (error) {
+                statusDiv.innerHTML = error.message || 'Login failed. Please check your credentials.';
+                statusDiv.className = 'status-message error';
+                statusDiv.style.display = 'block';
+            }
+        }
+        // Trigger PayPal payment when price-tag is clicked
+        // Handle join button click
+        function handleJoinButtonClick() {
+            console.log('Join button clicked'); // Debug log
+            
+            const joinNowBtn = document.getElementById('joinNowBtn');
+            const paypalContainer = document.getElementById('paypal-button-container');
+            const registrationForm = document.getElementById('registrationForm');
+            const paymentStatus = document.getElementById('payment-status');
+            
+            if (!paypalContainer || !registrationForm) {
+                console.error('Required elements not found');
+                return;
+            }
+
+            // Show registration form first
+            registrationForm.style.display = 'flex';
+            
+            // Hide join button
+            joinNowBtn.style.display = 'none';
+
+            // Scroll to registration form
+            registrationForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Show success message
+            paymentStatus.style.display = 'block';
+            paymentStatus.style.background = 'rgba(0, 0, 0, 0.7)';
+            paymentStatus.style.border = '1px solid #ffd700';
+            paymentStatus.querySelector('.payment-message').innerHTML = 
+                '<p style="color: #ffd700;">Please complete the registration to proceed with payment</p>';
+        }
+
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded'); // Debug log
+            initJoinButton();
         });
 
         async function handleRegistration() {
             const nameInput = document.getElementById('name');
             const emailInput = document.getElementById('email');
             const passwordInput = document.getElementById('password');
-            const skillsInput = document.getElementById('skills');
-            const resumeInput = document.getElementById('resume');
+            const phoneInput = document.getElementById('phoneNumber');
             const statusDiv = document.getElementById('registration-status');
+            const submitBtn = document.querySelector('#registrationForm .cta-button');
 
             try {
-                const formData = new FormData();
-                formData.append('name', nameInput.value);
-                formData.append('email', emailInput.value);
-                formData.append('password', passwordInput.value);
-                formData.append('skills', skillsInput.value);
-                if (resumeInput.files.length > 0) {
-                    formData.append('resume', resumeInput.files[0]);
+                // Input validation
+                if (!nameInput.value || !emailInput.value || !passwordInput.value || !phoneInput.value) {
+                    throw new Error('Please fill in all fields');
                 }
 
-                const response = await fetch('http://localhost:3000/api/register', {
-                    method: 'POST',
-                    body: formData
-                });
+                if (!emailInput.value.includes('@')) {
+                    throw new Error('Please enter a valid email address');
+                }
+
+                // Disable submit button and show loading state
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Processing...';
+                
+                const userData = {
+                    name: nameInput.value,
+                    email: emailInput.value,
+                    password: passwordInput.value,
+                    phoneNumber: phoneInput.value,
+                    userType: 'user'
+                };
+
+                // Show loading state in payment status
+                const paymentStatus = document.getElementById('payment-status');
+                paymentStatus.style.display = 'block';
+                paymentStatus.style.background = 'rgba(0,0,0,0.7)';
+                paymentStatus.style.border = '2px solid #ffd700';
+                paymentStatus.querySelector('.payment-message').innerHTML = `
+                    <div style="padding: 20px;">
+                        <p style="color: #ffd700;">Processing registration...</p>
+                    </div>
+                `;
+
+                console.log('Sending registration request...'); // Debug log
+                
+                try {
+                    // First check if server is running
+                    const healthCheck = await fetch('http://localhost:3000/api/health').catch(() => null);
+                    if (!healthCheck) {
+                        throw new Error('Server is not running. Please try again later.');
+                    }
+
+                    const response = await fetch('http://localhost:3000/api/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(userData),
+                        mode: 'cors',
+                        credentials: 'same-origin'
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || 'Registration failed');
+                    }
+
+                    console.log('Registration response received:', response.status); // Debug log
+                    return response;
+
+                } catch (error) {
+                    console.error('Registration error:', error); // Debug log
+                    if (!window.navigator.onLine) {
+                        throw new Error('You are offline. Please check your internet connection.');
+                    } else {
+                        throw new Error('Server connection failed. Please try again in a few moments.');
+                    }
+                }
 
                 const data = await response.json();
 
                 if (response.ok) {
+                    const data = await response.json();
                     currentUser = {
                         userId: data.userId,
                         token: data.token
                     };
-                    // Show success message
-                    statusDiv.innerHTML = 'Registration successful! Please proceed with payment.';
-                    statusDiv.className = 'status-message success';
-                    statusDiv.style.display = 'block';
+
+                    // Show success message and a redirect-based Pay button
+                    const paymentStatus = document.getElementById('payment-status');
+                    paymentStatus.style.display = 'block';
+                    paymentStatus.style.background = 'rgba(0,0,0,0.7)';
+                    paymentStatus.style.border = '2px solid #ffd700';
+                    paymentStatus.querySelector('.payment-message').innerHTML = `
+                        <div style="padding: 20px; text-align:center;">
+                            <h3 style="color: #ffd700; margin-bottom: 10px;">Registration Successful! ✨</h3>
+                            <p style="color: #ffffff;">Please proceed with the payment to activate your account.</p>
+                            <p style="margin-top: 10px; font-size: 0.9em; color: #ffd700;">Amount: ₹1 only</p>
+                            <button id="redirectPayBtn" class="cta-button" style="margin-top:12px;">Pay ₹1 Now</button>
+                        </div>
+                    `;
+
+                    // Hide the inline PayPal container used for direct buttons
+                    document.getElementById('paypal-button-container').style.display = 'none';
+
+                    // Wire redirect button
+                    setTimeout(() => {
+                        const redirectBtn = document.getElementById('redirectPayBtn');
+                        if (redirectBtn) {
+                            redirectBtn.addEventListener('click', async function() {
+                                try {
+                                    redirectBtn.disabled = true;
+                                    redirectBtn.textContent = 'Redirecting...';
+
+                                    const resp = await fetch('http://localhost:3000/api/create-paypal-order', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ userId: currentUser.userId, amount: '1.00', currency: 'INR' })
+                                    });
+
+                                    const body = await resp.json();
+                                    if (!resp.ok) throw new Error(body.message || 'Failed to create order');
+
+                                    if (body.approveUrl) {
+                                        // Redirect the browser to PayPal approval URL
+                                        window.location.href = body.approveUrl;
+                                    } else {
+                                        throw new Error('Approval URL missing from PayPal response');
+                                    }
+                                } catch (err) {
+                                    console.error('Redirect payment error:', err);
+                                    alert('Unable to start payment. Please try again later.');
+                                    redirectBtn.disabled = false;
+                                    redirectBtn.textContent = 'Pay ₹1 Now';
+                                }
+                            });
+                        }
+                    }, 200);
+                    
+                    // Store credentials for later login
+                    localStorage.setItem('tempEmail', emailInput.value);
+                    localStorage.setItem('tempPassword', passwordInput.value);
                 } else {
                     throw new Error(data.message || 'Registration failed');
                 }
+
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Get Started Now';
             } catch (error) {
-                statusDiv.innerHTML = error.message;
-                statusDiv.className = 'status-message error';
-                statusDiv.style.display = 'block';
+                console.error('Registration error:', error);
+                const paymentStatus = document.getElementById('payment-status');
+                paymentStatus.style.display = 'block';
+                paymentStatus.style.background = 'rgba(0,0,0,0.7)';
+                paymentStatus.style.border = '2px solid #ff6b6b';
+                paymentStatus.querySelector('.payment-message').innerHTML = `
+                    <div style="padding: 20px;">
+                        <h3 style="color: #ff6b6b; margin-bottom: 10px;">Registration Failed</h3>
+                        <p style="color: #ffffff;">${error.message}</p>
+                        <button onclick="retryRegistration()" class="cta-button" style="margin-top: 15px;">Try Again</button>
+                    </div>
+                `;
+                
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Get Started Now';
             }
         }
 
@@ -527,42 +1019,105 @@
             }
         }, true);
 
-        paypal.Buttons({
-            createOrder: function(data, actions) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: '1.00',
-                            currency_code: 'INR'
-                        },
-                        description: 'Success Sprout Membership'
-                    }]
-                });
-            },
+        // Function to show payment UI
+        function showPaymentUI() {
+            const paypalContainer = document.getElementById('paypal-button-container');
+            const registrationForm = document.getElementById('registrationForm');
+            const paymentStatus = document.getElementById('payment-status');
+
+            registrationForm.style.display = 'none';
+            paypalContainer.style.display = 'block';
+            paymentStatus.style.display = 'block';
+            paymentStatus.style.background = 'rgba(0, 0, 0, 0.7)';
+            paymentStatus.style.border = '1px solid #ffd700';
+            paymentStatus.querySelector('.payment-message').innerHTML = 
+                '<p style="color: #ffd700;">Please complete your payment of ₹1</p>';
+
+            // Scroll to PayPal button
+            paypalContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Initialize PayPal buttons
+        function initPayPalButton() {
+            if (typeof paypal !== 'undefined') {
+                console.log('PayPal SDK loaded');
+                return paypal.Buttons({
+                    style: {
+                        layout: 'vertical',
+                        color:  'gold',
+                        shape:  'pill',
+                        label:  'pay'
+                    },
+                    createOrder: async function(data, actions) {
+                        console.log('Creating PayPal order');
+                        try {
+                            // First ensure user is registered
+                            if (!currentUser || !currentUser.userId) {
+                                throw new Error('Please register first');
+                            }
+
+                            return actions.order.create({
+                                purchase_units: [{
+                                    amount: {
+                                        value: '1.00',
+                                        currency_code: 'INR'
+                                    },
+                                    description: 'Success Sprout Membership',
+                                    custom_id: currentUser.userId
+                                }]
+                            });
+                        } catch (error) {
+                            console.error('Order creation error:', error);
+                            const paymentStatus = document.getElementById('payment-status');
+                            paymentStatus.style.background = 'rgba(0, 0, 0, 0.7)';
+                            paymentStatus.style.border = '1px solid #ff6b6b';
+                            paymentStatus.querySelector('.payment-message').innerHTML = 
+                                `<p style="color: #ff6b6b;">${error.message}</p>`;
+                            throw error;
+                        }
+                    },
             onApprove: function(data, actions) {
+                document.getElementById('payment-loading').style.display = 'block';
                 return actions.order.capture().then(async function(details) {
                     try {
+                        console.log('Payment captured:', details);
+                        
                         // Update payment status in backend
-                        await fetch('http://localhost:3000/api/payment-webhook', {
+                        const response = await fetch('http://localhost:3000/api/payment-webhook', {
                             method: 'POST',
                             headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${currentUser.token}`
+                                'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
                                 userId: currentUser.userId,
-                                paymentId: details.id
+                                paymentId: details.id,
+                                orderID: data.orderID
                             })
                         });
 
+                        if (!response.ok) {
+                            throw new Error('Payment verification failed');
+                        }
+
                         // Show success message
                         const statusDiv = document.getElementById('registration-status');
-                        statusDiv.innerHTML = 'Thank you for your payment! Your Success Sprout membership is now active.';
+                        statusDiv.innerHTML = `
+                            <div style="background: rgba(0,0,0,0.7); padding: 20px; border-radius: 10px; border: 2px solid #ffd700;">
+                                <h3 style="color: #ffd700; margin-bottom: 10px;">Payment Successful! 🎉</h3>
+                                <p>Welcome to Success Sprout!</p>
+                                <p style="margin-top: 10px; font-size: 0.9em;">Redirecting to your dashboard...</p>
+                            </div>
+                        `;
                         statusDiv.className = 'status-message success';
                         statusDiv.style.display = 'block';
 
                         // Hide PayPal button
                         document.getElementById('paypal-button-container').style.display = 'none';
+
+                        // Redirect to login after 2 seconds
+                        setTimeout(() => {
+                            window.location.href = '/login.html';
+                        }, 2000);
                     } catch (error) {
                         console.error('Payment verification error:', error);
                         alert('Payment received but verification failed. Please contact support.');
@@ -574,6 +1129,17 @@
                 console.error('PayPal Error:', err);
             }
         }).render('#paypal-button-container');
+            } else {
+                console.error('PayPal SDK not loaded'); // Debug log
+            }
+        }
+
+        // Call initPayPalButton after SDK loads
+        if (document.readyState === 'complete') {
+            initPayPalButton();
+        } else {
+            window.addEventListener('load', initPayPalButton);
+        }
     </script>
 
     <section class="features" id="features">
@@ -679,17 +1245,157 @@
             <p>Join thousands of students already using Success Sprout to achieve their dreams</p>
             <div class="price-tag">Limited Time Offer: ₹1 Only</div>
             <br><br>
-            <a href="#" class="cta-button" onclick="alert('Registration coming soon! Thank you for your interest.'); return false;">Join Success Sprout Today</a>
+            <a href="#" id="ctaJoinBtn" class="cta-button" onclick="startJoinFlow(); return false;">Join Success Sprout Today</a>
             <p style="font-size: 0.9rem; margin-top: 2rem; opacity: 0.9;">
                 No hidden fees • Cancel anytime • Instant access
             </p>
         </div>
     </section>
 
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Welcome Back!</h2>
+            <form id="loginModalForm" onsubmit="handleModalLogin(event)">
+                <div class="form-group">
+                    <input type="email" id="loginModalEmail" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginModalPassword" placeholder="Password" required>
+                </div>
+                <button type="submit" class="modal-submit-btn">Login</button>
+                <div id="loginError" class="error-message"></div>
+            </form>
+            <p class="modal-footer">
+                Don't have an account? <a href="#join" class="modal-link">Register here</a>
+            </p>
+        </div>
+    </div>
+
     <footer class="footer">
         <p>&copy; 2025 Success Sprout. All rights reserved.</p>
         <p style="margin-top: 0.5rem;">Empowering students with AI-driven education solutions</p>
     </footer>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            margin: 15% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            animation: modalSlideDown 0.3s ease;
+            border: 1px solid #333;
+            box-shadow: 0 0 30px rgba(255,215,0,0.1);
+        }
+
+        @keyframes modalSlideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .modal h2 {
+            color: #ffd700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255,215,0,0.3);
+        }
+
+        .modal .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #333;
+            border-radius: 5px;
+            font-size: 1rem;
+            background: #000000;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .modal input:focus {
+            border-color: #ffd700;
+            outline: none;
+            box-shadow: 0 0 10px rgba(255,215,0,0.1);
+        }
+
+        .modal-submit-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: #000000;
+            color: #ffd700;
+            border: 2px solid #ffd700;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(255,215,0,0.3);
+        }
+
+        .modal-submit-btn:hover {
+            background: #ffd700;
+            color: #000000;
+            text-shadow: none;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,215,0,0.2);
+        }
+
+        .modal-footer {
+            margin-top: 1rem;
+            text-align: center;
+            color: #e0e0e0;
+        }
+
+        .modal-link {
+            color: #ffd700;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(255,215,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .modal-link:hover {
+            text-decoration: none;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255,215,0,0.5);
+        }
+    </style>
 
     <script>
         // Smooth scrolling for navigation links
@@ -744,6 +1450,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+</script>
+<!-- Site utilities (toasts, quick-add, api base) -->
+<script src="/js/site.js" defer></script>
+<script>
+    // Allow overriding API base via global variable (Vercel/Vhost can replace during deploy)
+    window.API_BASE = window.API_BASE || '';
 </script>
 </body>
 </html>

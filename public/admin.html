@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success Sprout Admin - User Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .users-table th {
+            background-color: #667eea;
+            color: white;
+        }
+
+        .users-table tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        .status.paid {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .status.unpaid {
+            background-color: #ff5722;
+            color: white;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .refresh-btn {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .refresh-btn:hover {
+            background-color: #5a6fe0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Management Dashboard</h1>
+        <button class="refresh-btn" onclick="loadUsers()">Refresh Data</button>
+        <input type="text" class="search-box" id="searchBox" placeholder="Search users..." onkeyup="filterUsers()">
+        <table class="users-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Registration Date</th>
+                    <th>Payment Status</th>
+                    <th>User Type</th>
+                </tr>
+            </thead>
+            <tbody id="usersTableBody">
+                <!-- User data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        async function loadUsers() {
+            const tableBody = document.getElementById('usersTableBody');
+            const refreshBtn = document.querySelector('.refresh-btn');
+            
+            try {
+                // Show loading state
+                refreshBtn.textContent = 'Loading...';
+                refreshBtn.disabled = true;
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Loading users...</td></tr>';
+
+                // Add admin key to the request
+                const adminKey = new URLSearchParams(window.location.search).get('adminKey');
+                const response = await fetch(`/api/admin/users?adminKey=${adminKey || 'admin123'}`);
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Failed to fetch users');
+                }
+
+                const users = await response.json();
+                
+                if (!users || users.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No users found</td></tr>';
+                } else {
+                    displayUsers(users);
+                }
+            } catch (error) {
+                console.error('Error loading users:', error);
+                tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">
+                    Error loading users: ${error.message}. Please try again.
+                </td></tr>`;
+            } finally {
+                // Reset button state
+                refreshBtn.textContent = 'Refresh Data';
+                refreshBtn.disabled = false;
+            }
+        }
+
+        function displayUsers(users) {
+            const tableBody = document.getElementById('usersTableBody');
+            tableBody.innerHTML = users.map(user => `
+                <tr>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${new Date(user.registrationDate).toLocaleString()}</td>
+                    <td><span class="status ${user.paymentStatus ? 'paid' : 'unpaid'}">
+                        ${user.paymentStatus ? 'Paid' : 'Unpaid'}
+                    </span></td>
+                    <td>${user.userType}</td>
+                </tr>
+            `).join('');
+        }
+
+        function filterUsers() {
+            const searchText = document.getElementById('searchBox').value.toLowerCase();
+            const rows = document.querySelectorAll('#usersTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchText) ? '' : 'none';
+            });
+        }
+
+        // Load users when page loads
+        document.addEventListener('DOMContentLoaded', loadUsers);
+    </script>
+</body>
+</html>

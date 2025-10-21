@@ -1,0 +1,43 @@
+# Deploy to AWS Elastic Beanstalk
+branch-defaults:
+  main:
+    environment: SuccessSprout-env
+    group_suffix: null
+
+global:
+  application_name: SuccessSprout
+  branch: null
+  default_ec2_keyname: null
+  default_platform: Node.js 18
+  default_region: ap-south-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  repository: null
+  sc: git
+  workspace_type: Application
+
+deploy:
+  artifact: build.zip
+
+option_settings:
+  aws:autoscaling:launchconfiguration:
+    IamInstanceProfile: aws-elasticbeanstalk-ec2-role
+    InstanceType: t2.micro
+  aws:autoscaling:asg:
+    MinSize: '1'
+    MaxSize: '2'
+  aws:elasticbeanstalk:environment:
+    ServiceRole: aws-elasticbeanstalk-service-role
+  aws:elasticbeanstalk:application:environment:
+    NODE_ENV: production
+    MONGODB_URI: 
+    PAYPAL_CLIENT_ID: 
+    PAYPAL_CLIENT_SECRET: 
+    JWT_SECRET: 
+  aws:elasticbeanstalk:container:nodejs:
+    NodeVersion: 18.17.0
+  aws:elasticbeanstalk:environment:proxy:staticfiles:
+    /static: /static

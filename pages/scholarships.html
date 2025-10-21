@@ -88,7 +88,9 @@
                 return;
             }
 
-            fetch('http://localhost:3000/api/apply-scholarship', {
+            const base = window.SS && window.SS.apiBase ? window.SS.apiBase : (window.API_BASE || 'http://localhost:3000');
+
+            fetch(base + '/api/apply-scholarship', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -98,11 +100,13 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert('Scholarship application submitted successfully!');
+                if (window.SS && window.SS.toast) window.SS.toast('Scholarship application submitted successfully!', 'success');
+                else alert('Scholarship application submitted successfully!');
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Failed to submit application. Please try again.');
+                if (window.SS && window.SS.toast) window.SS.toast('Failed to submit application. Please try again.', 'error');
+                else alert('Failed to submit application. Please try again.');
             });
         }
 
@@ -114,5 +118,6 @@
             // Add filtering logic here
         }
     </script>
+    <script src="/js/site.js" defer></script>
 </body>
 </html>

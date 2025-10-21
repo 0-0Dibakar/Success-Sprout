@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Success Sprout</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: #f5f7fa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 0.5rem 1rem;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .course-grid, .scholarship-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card, .scholarship-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.2s;
+        }
+
+        .course-card:hover, .scholarship-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .course-card h3, .scholarship-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            color: #667eea;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9em;
+            margin-top: 1rem;
+        }
+
+        .status.open {
+            background: #4caf50;
+            color: white;
+        }
+
+        .status.closed {
+            background: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="user-info">
+            <h2>Welcome, <span id="userName">User</span></h2>
+        </div>
+        <button class="logout-btn" onclick="handleLogout()">Logout</button>
+    </header>
+
+    <div class="container">
+        <section class="section">
+            <h2>Available Courses</h2>
+            <div class="course-grid" id="courseList">
+                <!-- Courses will be loaded here -->
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Scholarship Opportunities</h2>
+            <div class="scholarship-grid" id="scholarshipList">
+                <!-- Scholarships will be loaded here -->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            // Set user name
+            const userName = localStorage.getItem('userName');
+            document.getElementById('userName').textContent = userName;
+
+            // Load data
+            loadCourses();
+            loadScholarships();
+        });
+
+        async function loadCourses() {
+            try {
+                const response = await fetch('http://localhost:3000/api/courses', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                const courses = await response.json();
+                displayCourses(courses);
+            } catch (error) {
+                console.error('Error loading courses:', error);
+            }
+        }
+
+        async function loadScholarships() {
+            try {
+                const response = await fetch('http://localhost:3000/api/scholarships', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                const scholarships = await response.json();
+                displayScholarships(scholarships);
+            } catch (error) {
+                console.error('Error loading scholarships:', error);
+            }
+        }
+
+        function displayCourses(courses) {
+            const courseList = document.getElementById('courseList');
+            courseList.innerHTML = courses.map(course => `
+                <div class="course-card">
+                    <h3>${course.title}</h3>
+                    <p>${course.description}</p>
+                    <div class="price">₹${course.price}</div>
+                    <button class="btn" onclick="enrollCourse('${course._id}')">Enroll Now</button>
+                </div>
+            `).join('');
+        }
+
+        function displayScholarships(scholarships) {
+            const scholarshipList = document.getElementById('scholarshipList');
+            scholarshipList.innerHTML = scholarships.map(scholarship => `
+                <div class="scholarship-card">
+                    <h3>${scholarship.title}</h3>
+                    <p>${scholarship.description}</p>
+                    <div>Amount: ₹${scholarship.amount}</div>
+                    <div class="status ${scholarship.status.toLowerCase()}">${scholarship.status}</div>
+                    <button class="btn" onclick="applyScholarship('${scholarship._id}')" 
+                            ${scholarship.status === 'Closed' ? 'disabled' : ''}>
+                        Apply Now
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        async function enrollCourse(courseId) {
+            try {
+                const response = await fetch(`http://localhost:3000/api/courses/${courseId}/enroll`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    alert('Successfully enrolled in the course!');
+                } else {
+                    alert(data.message || 'Failed to enroll in course');
+                }
+            } catch (error) {
+                console.error('Error enrolling in course:', error);
+                alert('An error occurred while enrolling in the course');
+            }
+        }
+
+        async function applyScholarship(scholarshipId) {
+            try {
+                const response = await fetch(`http://localhost:3000/api/scholarships/${scholarshipId}/apply`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    alert('Successfully applied for scholarship!');
+                } else {
+                    alert(data.message || 'Failed to apply for scholarship');
+                }
+            } catch (error) {
+                console.error('Error applying for scholarship:', error);
+                alert('An error occurred while applying for scholarship');
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userId');
+            localStorage.removeItem('userName');
+            window.location.href = '/login.html';
+        }
+    </script>
+</body>
+</html>

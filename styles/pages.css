@@ -8,19 +8,20 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f5f7fa;
+    color: #e0e0e0;
+    background-color: #121212;
 }
 
 .header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #000000;
     color: white;
     padding: 1rem 0;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(255,255,255,0.1);
+    border-bottom: 1px solid #333;
 }
 
 .nav-container {
@@ -45,13 +46,15 @@ body {
 .logo-icon {
     width: 40px;
     height: 40px;
-    background: white;
+    background: #1a1a1a;
+    border: 2px solid #gold;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #667eea;
+    color: #gold;
     font-weight: bold;
+    text-shadow: 0 0 10px rgba(255,215,0,0.5);
 }
 
 .nav-links {
@@ -61,13 +64,30 @@ body {
 }
 
 .nav-links a {
-    color: white;
+    color: #gold;
     text-decoration: none;
-    transition: opacity 0.3s;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #gold;
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
 }
 
 .nav-links a:hover {
-    opacity: 0.8;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255,215,0,0.3);
 }
 
 .content {
