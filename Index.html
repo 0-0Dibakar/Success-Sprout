@@ -887,13 +887,14 @@
                 console.log('Sending registration request...'); // Debug log
                 
                 try {
+                    // Use relative API paths (works with local server or deployed host)
                     // First check if server is running
-                    const healthCheck = await fetch('http://localhost:3000/api/health').catch(() => null);
+                    const healthCheck = await fetch('/api/health').catch(() => null);
                     if (!healthCheck) {
                         throw new Error('Server is not running. Please try again later.');
                     }
 
-                    const response = await fetch('http://localhost:3000/api/register', {
+                    const response = await fetch('/api/register', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -905,8 +906,20 @@
                     });
 
                     if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData.message || 'Registration failed');
+                        let errorText = 'Registration failed';
+                        try {
+                            const errorData = await response.json();
+                            errorText = errorData.message || JSON.stringify(errorData);
+                        } catch (e) {
+                            // ignore JSON parse errors
+                        }
+                        // show server error message in UI
+                        const paymentStatusEl = document.getElementById('payment-status');
+                        paymentStatusEl.style.display = 'block';
+                        paymentStatusEl.className = 'status-message error';
+                        paymentStatusEl.innerText = errorText;
+                        console.error('Registration failed:', errorText);
+                        return null;
                     }
 
                     console.log('Registration response received:', response.status); // Debug log
@@ -914,11 +927,16 @@
 
                 } catch (error) {
                     console.error('Registration error:', error); // Debug log
+                    const paymentStatusEl = document.getElementById('payment-status');
+                    paymentStatusEl.style.display = 'block';
+                    paymentStatusEl.className = 'status-message error';
                     if (!window.navigator.onLine) {
-                        throw new Error('You are offline. Please check your internet connection.');
+                        paymentStatusEl.innerText = 'You are offline. Please check your internet connection.';
                     } else {
-                        throw new Error('Server connection failed. Please try again in a few moments.');
+                        // prefer actual error message when available
+                        paymentStatusEl.innerText = error?.message || 'Server connection failed. Please try again in a few moments.';
                     }
+                    return null;
                 }
 
                 const data = await response.json();

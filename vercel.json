@@ -4,6 +4,10 @@
     {
       "src": "Index.html",
       "use": "@vercel/static"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
     }
   ],
   "rewrites": [
@@ -11,5 +15,8 @@
       "source": "/api/(.*)",
       "destination": "https://YOUR_BACKEND_HOST/api/$1"
     }
-  ]
+  ],
+  "env": {
+    "API_BASE": "https://YOUR_BACKEND_HOST"
+  }
 }
