@@ -42,7 +42,7 @@
             const password = document.getElementById('password').value;
             const errorMessage = document.getElementById('error-message');
             try {
-                const response = await fetch('http://localhost:3000/api/recruiter/register', {
+                const response = await fetch('/api/recruiter/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ company, email, password })

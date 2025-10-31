@@ -164,7 +164,7 @@
 
         async function loadCourses() {
             try {
-                const response = await fetch('http://localhost:3000/api/courses', {
+                const response = await fetch('/api/courses', {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
@@ -178,7 +178,7 @@
 
         async function loadScholarships() {
             try {
-                const response = await fetch('http://localhost:3000/api/scholarships', {
+                const response = await fetch('/api/scholarships', {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
@@ -220,7 +220,7 @@
 
         async function enrollCourse(courseId) {
             try {
-                const response = await fetch(`http://localhost:3000/api/courses/${courseId}/enroll`, {
+                const response = await fetch(`/api/courses/${courseId}/enroll`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -242,7 +242,7 @@
 
         async function applyScholarship(scholarshipId) {
             try {
-                const response = await fetch(`http://localhost:3000/api/scholarships/${scholarshipId}/apply`, {
+                const response = await fetch(`/api/scholarships/${scholarshipId}/apply`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,

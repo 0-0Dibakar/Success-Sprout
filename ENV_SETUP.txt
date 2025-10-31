@@ -1,0 +1,32 @@
+IMPORTANT: CREATE A .env FILE IN THE ROOT DIRECTORY
+
+Copy this content into a new file named ".env" in the root directory:
+
+===================================
+# Supabase Configuration
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+
+# JWT Secret for authentication
+JWT_SECRET=development-secret-key-change-in-production
+
+# PayPal Configuration (optional - only needed for payments)
+PAYPAL_CLIENT_ID=
+PAYPAL_CLIENT_SECRET=
+PAYPAL_MODE=sandbox
+
+# Server Configuration
+PORT=3000
+BIND_HOST=0.0.0.0
+
+# Environment
+NODE_ENV=development
+===================================
+
+YOU MUST:
+1. Get your Supabase credentials from https://app.supabase.com
+2. Put them in the SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY fields above
+3. See SETUP.md for detailed instructions
+
+Without a .env file, the server will not connect to the database!
+

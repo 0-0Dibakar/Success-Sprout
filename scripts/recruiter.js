@@ -15,7 +15,7 @@ function showSection(sectionId) {
 
 async function loadJobs() {
     const token = localStorage.getItem('recruiterToken');
-    const response = await fetch('http://localhost:3000/api/recruiter/jobs', {
+    const response = await fetch('/api/recruiter/jobs', {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     const jobs = await response.json();
@@ -43,7 +43,7 @@ async function postJob(event) {
         description: document.getElementById('jobDescription').value,
         skills: document.getElementById('jobSkills').value.split(',').map(s => s.trim())
     };
-    const response = await fetch('http://localhost:3000/api/recruiter/jobs', {
+    const response = await fetch('/api/recruiter/jobs', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ async function viewApplicants(jobId, jobTitle) {
     showSection('applicants');
     document.getElementById('jobTitleHeader').textContent = jobTitle;
     const token = localStorage.getItem('recruiterToken');
-    const response = await fetch(`http://localhost:3000/api/recruiter/jobs/${jobId}/applicants`, {
+    const response = await fetch(`/api/recruiter/jobs/${jobId}/applicants`, {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     const applicants = await response.json();
@@ -83,7 +83,7 @@ async function viewApplicants(jobId, jobTitle) {
 
 async function deleteJob(jobId) {
     const token = localStorage.getItem('recruiterToken');
-    const response = await fetch(`http://localhost:3000/api/recruiter/jobs/${jobId}`, {
+    const response = await fetch(`/api/recruiter/jobs/${jobId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
     });

@@ -88,7 +88,7 @@
                 return;
             }
 
-            const base = window.SS && window.SS.apiBase ? window.SS.apiBase : (window.API_BASE || 'http://localhost:3000');
+            const base = window.SS && window.SS.apiBase ? window.SS.apiBase : (window.API_BASE || '');
 
             fetch(base + '/api/apply-scholarship', {
                 method: 'POST',

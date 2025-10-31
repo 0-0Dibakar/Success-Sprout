@@ -9,7 +9,7 @@ function checkAuth() {
 // Load initial data
 async function loadDashboardData() {
     try {
-        const response = await fetch('http://localhost:3000/api/admin/dashboard', {
+        const response = await fetch('/api/admin/dashboard', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
             }
@@ -52,7 +52,7 @@ function showSection(sectionId) {
 // Load section specific data
 async function loadSectionData(section) {
     try {
-        const response = await fetch(`http://localhost:3000/api/admin/${section}`, {
+        const response = await fetch(`/api/admin/${section}`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
             }
@@ -103,7 +103,7 @@ async function addCourse(event) {
     formData.append('image', document.getElementById('courseImage').files[0]);
 
     try {
-        const response = await fetch('http://localhost:3000/api/admin/courses', {
+        const response = await fetch('/api/admin/courses', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('adminToken')}`

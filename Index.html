@@ -698,7 +698,7 @@
                 submitBtn.disabled = true;
                 submitBtn.textContent = 'Logging in...';
                 
-                const response = await fetch('http://localhost:3000/api/login', {
+                const response = await fetch('/api/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -771,7 +771,7 @@
             const statusDiv = document.getElementById('registration-status');
             
             try {
-                const response = await fetch('http://localhost:3000/api/login', {
+                const response = await fetch('/api/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -974,7 +974,7 @@
                                     redirectBtn.disabled = true;
                                     redirectBtn.textContent = 'Redirecting...';
 
-                                    const resp = await fetch('http://localhost:3000/api/create-paypal-order', {
+                                    const resp = await fetch('/api/create-paypal-order', {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
                                         body: JSON.stringify({ userId: currentUser.userId, amount: '1.00', currency: 'INR' })
@@ -1101,7 +1101,7 @@
                         console.log('Payment captured:', details);
                         
                         // Update payment status in backend
-                        const response = await fetch('http://localhost:3000/api/payment-webhook', {
+                        const response = await fetch('/api/payment-webhook', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
