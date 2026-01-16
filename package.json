@@ -1,25 +1,28 @@
 {
   "name": "success-sprout",
-  "version": "1.0.0",
-  "description": "AI-Powered Education & Career Platform",
+  "version": "2.0.0",
+  "description": "Full MERN Stack - AI-Powered Education & Career Platform",
   "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "echo 'Building...' && npm install",
-    "deploy": "eb deploy",
-    "predeploy": "npm run build"
+    "client": "cd client && npm run dev",
+    "client-build": "cd client && npm run build",
+    "build": "npm install && cd client && npm install && npm run build",
+    "deploy": "npm run build && git push heroku main"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.76.1",
     "axios": "^1.12.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "multer": "^2.0.2",
-    "node-fetch": "^2.7.0"
+    "mongoose": "^8.0.0",
+    "multer": "^2.0.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
